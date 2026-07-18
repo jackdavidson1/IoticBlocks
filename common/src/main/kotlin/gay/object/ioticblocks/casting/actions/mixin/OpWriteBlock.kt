@@ -30,7 +30,7 @@ object OpWriteBlock {
             throw MishapBadBlock.of(target, "iota.write")
         }
 
-        val trueName = MishapOthersName.getTrueNameFromDatum(datum, null)
+        val trueName = MishapOthersName.getTrueNameFromDatum(env.world,datum,null)
         if (null != trueName) {
             throw MishapOthersName(trueName)
         }

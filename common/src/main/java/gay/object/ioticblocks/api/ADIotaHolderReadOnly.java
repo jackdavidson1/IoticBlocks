@@ -24,7 +24,8 @@ public interface ADIotaHolderReadOnly extends ADIotaHolder {
     @NotNull
     static ADIotaHolder ofStatic(@Nullable Iota iota) {
         return new ADIotaHolderReadOnly() {
-            @Override
+            //TODO
+            /*@Override
             @Nullable
             public CompoundTag readIotaTag() {
                 if (iota != null) {
@@ -32,11 +33,11 @@ public interface ADIotaHolderReadOnly extends ADIotaHolder {
                 } else {
                     return null;
                 }
-            }
+            }*/
 
             @Override
             @Nullable
-            public Iota readIota(ServerLevel world) {
+            public Iota readIota() {
                 return iota;
             }
         };

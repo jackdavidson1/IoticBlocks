@@ -4,7 +4,6 @@ import at.petrak.hexcasting.api.HexAPI
 import at.petrak.hexcasting.api.addldata.ADIotaHolder
 import at.petrak.hexcasting.api.casting.iota.BooleanIota
 import at.petrak.hexcasting.api.casting.iota.Iota
-import at.petrak.hexcasting.api.casting.iota.IotaType
 import at.petrak.hexcasting.api.casting.iota.ListIota
 import at.petrak.hexcasting.api.casting.iota.NullIota
 import at.petrak.hexcasting.api.casting.iota.PatternIota
@@ -16,11 +15,11 @@ import gay.`object`.ioticblocks.api.ADIotaHolderReadOnly
 import gay.`object`.ioticblocks.api.IotaHolderProvider
 import gay.`object`.ioticblocks.api.IoticBlocksAPI
 import gay.`object`.ioticblocks.registry.IoticBlocksActions
-import net.minecraft.nbt.CompoundTag
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.server.level.ServerLevel
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
+import net.minecraft.server.level.ServerLevel
+import net.minecraft.nbt.CompoundTag
 
 
 object IoticBlocks {
@@ -30,7 +29,7 @@ object IoticBlocks {
     val LOGGER: Logger = LogManager.getLogger(MODID)
 
     @JvmStatic
-    fun id(path: String) = ResourceLocation(MODID, path)
+    fun id(path: String) = ResourceLocation.fromNamespaceAndPath(MODID, path)
 
     fun init() {
         LOGGER.info("Putting chemicals in the water to turn the blocks iotic...")
@@ -67,11 +66,7 @@ object IoticBlocks {
                 ?: return@registerHexIotaHolderProvider null
 
             object : ADIotaHolder {
-                override fun readIotaTag(): CompoundTag? {
-                    return tile.pattern?.let(::PatternIota)?.let { IotaType.serialize(it) }
-                }
-
-                override fun readIota(world: ServerLevel): Iota? {
+                override fun readIota(): Iota? {
                     return tile.pattern?.let(::PatternIota)
                 }
 
@@ -98,7 +93,7 @@ object IoticBlocks {
             }
         }
 
-        IoticBlocksAPI.INSTANCE.registerIotaHolderProvider(ResourceLocation("minecraft", "cake")) { _, _ ->
+        IoticBlocksAPI.INSTANCE.registerIotaHolderProvider(ResourceLocation.fromNamespaceAndPath("minecraft", "cake")) { _, _ ->
             ADIotaHolderReadOnly.ofStatic(BooleanIota(false))
         }
     }

@@ -9,11 +9,13 @@ import at.petrak.hexcasting.api.casting.mishaps.*
 import com.mojang.datafixers.util.Either
 import net.minecraft.core.BlockPos
 import net.minecraft.world.entity.Entity
+import net.minecraft.server.level.ServerLevel
 
-fun List<Iota>.getEntityOrBlockPos(idx: Int, argc: Int = 0): Either<Entity, BlockPos> {
+
+fun List<Iota>.getEntityOrBlockPos(level: ServerLevel,idx: Int,argc: Int = 0,): Either<Entity, BlockPos> {
     val datum = this.getOrElse(idx) { throw MishapNotEnoughArgs(idx + 1, this.size) }
     return when (datum) {
-        is EntityIota -> Either.left(datum.entity)
+        is EntityIota -> Either.left(datum.getEntity(level))
         is Vec3Iota -> Either.right(BlockPos.containing(datum.vec3))
         else -> throw MishapInvalidIota.ofType(
             datum,

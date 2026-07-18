@@ -18,7 +18,7 @@ object OpReadableBlock {
         val datumHolder = IoticBlocksAPI.INSTANCE.findIotaHolder(env.world, target)
             ?: return false.asActionResult
 
-        datumHolder.readIota(env.world)
+        datumHolder.readIota()
             ?: datumHolder.emptyIota()
             ?: return false.asActionResult
 

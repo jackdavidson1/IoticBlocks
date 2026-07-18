@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "package": "gay.object.ioticblocks.neoforge.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "minVersion": "0.8",
+  "client": [
+  ],
+  "mixins": [
+    "MixinDatagenMain"
+  ],
+  "plugin": "gay.object.ioticblocks.neoforge.mixin.ForgeMixinConfigPlugin",
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

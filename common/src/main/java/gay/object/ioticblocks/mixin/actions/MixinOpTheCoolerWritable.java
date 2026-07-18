@@ -21,7 +21,7 @@ public abstract class MixinOpTheCoolerWritable implements ConstMediaAction {
         CastingEnvironment env,
         CallbackInfoReturnable<List<Iota>> cir
     ) {
-        IoticBlocksUtils.getEntityOrBlockPos(args, 0, getArgc()).ifRight(blockPos ->
+        IoticBlocksUtils.getEntityOrBlockPos(args,env.getWorld(), 0, getArgc()).ifRight(blockPos ->
             cir.setReturnValue(OpWritableBlock.execute(args, env))
         );
     }

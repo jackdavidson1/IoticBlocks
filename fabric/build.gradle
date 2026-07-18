@@ -1,0 +1,95 @@
+plugins {
+    id 'com.gradleup.shadow'
+    id "at.petra-k.pkpcpbp.PKJson5Plugin"
+}
+
+architectury {
+    platformSetupLoomIde()
+    fabric()
+}
+
+configurations {
+    common {
+        canBeResolved = true
+        canBeConsumed = false
+    }
+    compileClasspath.extendsFrom common
+    runtimeClasspath.extendsFrom common
+    developmentFabric.extendsFrom common
+
+    // Files in this configuration will be bundled into your mod using the Shadow plugin.
+    // Don't use the `shadow` configuration from the plugin itself as it's meant for excluding files.
+    shadowBundle {
+        canBeResolved = true
+        canBeConsumed = false
+    }
+}
+
+
+
+repositories {
+        mavenCentral()
+        maven { url = 'https://maven.fabricmc.net/' }
+        maven { url = 'https://maven.architectury.dev/' }
+        maven { url = 'https://files.minecraftforge.net/maven/' }
+        maven { url = 'https://thedarkcolour.github.io/KotlinForForge/' }
+        maven { url = "https://maven.blamejared.com/" }
+        maven { url = "https://maven.ladysnake.org/releases" }
+        maven { url = "https://maven.terraformersmc.com/"}
+        maven { url = "https://maven.theillusivec4.top/"}
+        maven { url = "https://maven.parchmentmc.org" }
+        maven { url = 'https://maven.wispforest.io/releases' }
+        maven { url = "https://maven.sinytra.org/" }
+        flatDir {
+            dirs '../libs'
+        }
+}
+
+dependencies {
+    modImplementation "net.fabricmc:fabric-loader:$rootProject.fabric_loader_version"
+
+    // Fabric API. This is technically optional, but you probably want it anyway.
+    modImplementation "net.fabricmc.fabric-api:fabric-api:$rootProject.fabric_api_version"
+
+    // Architectury API. This is optional, and you can comment it out if you don't need it.
+    modImplementation "dev.architectury:architectury-fabric:$rootProject.architectury_api_version"
+
+    common(project(path: ':common', configuration: 'namedElements')) { transitive = false }
+    shadowBundle project(path: ':common', configuration: 'transformProductionFabric')
+
+    // Common
+    modImplementation("vazkii.patchouli:Patchouli:$minecraft_version-$patchouli_version-FABRIC")
+    modImplementation("at.petra-k.hexcasting:hexcasting-fabric-$minecraft_version:$hexcasting_version")
+    modImplementation("at.petra-k:paucal:$paucal_version+$minecraft_version-fabric")
+    modImplementation("com.samsthenerd.inline:inline-fabric:$minecraft_version-$inline_version")
+    modImplementation("io.wispforest:accessories-fabric:$accessories_version+$minecraft_version")
+
+    // Fabric
+    modImplementation("net.fabricmc:fabric-language-kotlin:$flk_version")
+    modImplementation("org.ladysnake.cardinal-components-api:cardinal-components-base:$cc_version")
+    modImplementation("org.ladysnake.cardinal-components-api:cardinal-components-entity:$cc_version")
+    modImplementation("org.ladysnake.cardinal-components-api:cardinal-components-item:$cc_version")
+    modImplementation("org.ladysnake.cardinal-components-api:cardinal-components-block:$cc_version")
+    modImplementation("me.shedaniel.cloth:cloth-config-fabric:$cloth_config_version") {
+        exclude(group: "net.fabricmc.fabric-api")
+    }
+}
+
+processResources {
+    def buildProps = project.properties.clone()
+
+    filesMatching('fabric.mod.json') {
+        expand buildProps
+    }
+}
+
+shadowJar {
+    configurations = [project.configurations.shadowBundle]
+    archiveClassifier = 'dev-shadow'
+}
+
+remapJar {
+    inputFile.set shadowJar.archiveFile
+}
+
+

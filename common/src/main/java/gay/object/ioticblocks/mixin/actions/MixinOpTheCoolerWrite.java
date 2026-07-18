@@ -21,7 +21,7 @@ public abstract class MixinOpTheCoolerWrite implements SpellAction {
         CastingEnvironment env,
         CallbackInfoReturnable<SpellAction.Result> cir
     ) {
-        IoticBlocksUtils.getEntityOrBlockPos(args, 0, getArgc()).ifRight(blockPos ->
+        IoticBlocksUtils.getEntityOrBlockPos(args,env.getWorld(), 0, getArgc()).ifRight(blockPos ->
             cir.setReturnValue(OpWriteBlock.execute(args, env))
         );
     }

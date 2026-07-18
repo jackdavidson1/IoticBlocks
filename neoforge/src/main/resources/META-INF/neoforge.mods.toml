@@ -1,0 +1,38 @@
+modLoader = "kotlinforforge"
+loaderVersion = "[${kotlin_neoforge},)"
+license = "MIT"
+
+[[mods]]
+modId = "ioticblocks"
+version = "${version}"
+displayName = "IoticBlocks"
+logoFile = "assets/ioticblocks/icon.png"
+authors = "object-Object"
+description = "A port of HexGloop's block read/write patterns for 1.20 and beyond."
+
+[[mixins]]
+config = "${mod_id}-common.mixins.json"
+[[mixins]]
+config = "${mod_id}-neoforge.mixins.json"
+
+[[dependencies.ioticblocks]]
+modId = "neoforge"
+type = "required"
+versionRange = "[${neoforge_version},)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.ioticblocks]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[${minecraft_version},)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.ioticblocks]]
+modId = "architectury"
+mandatory = true
+versionRange = "[${architectury_api_version},)"
+ordering = "NONE"
+side = "BOTH"
+

@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "id": "ioticblocks",
-  "version": "${version}",
+  "version": "${mod_version}",
   "name": "IoticBlocks",
-  "description": "A port of HexGloop's block read/write patterns for 1.20.1.",
+  "description": "A port of HexGloop's block read/write patterns for 1.20 and beyond.",
   "authors": [
     "object-Object"
   ],
@@ -28,11 +28,14 @@
     "ioticblocks-common.mixins.json"
   ],
   "depends": {
-    "minecraft": "${versions.minecraft}",
-    "fabricloader": ">=${versions.fabric_loader}",
-    "fabric-api": ">=${versions.fabric_api}",
-    "fabric-language-kotlin": ">=${versions.kotlin_fabric}",
-    "architectury": ">=${versions.architectury}",
-    "hexcasting": ">=${versions.hexcasting_dependency}"
+    "fabricloader": ">=0.19.3",
+    "minecraft": "~1.21.1",
+    "java": ">=21",
+    "architectury": ">=13.0.8",
+    "fabric-api": "*",
+    "fabric-language-kotlin": ">=${flk_version}"
+  },
+  "suggests": {
+    "another-mod": "*"
   }
 }

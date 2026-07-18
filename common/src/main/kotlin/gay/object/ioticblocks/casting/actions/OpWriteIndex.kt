@@ -23,7 +23,7 @@ object OpWriteIndex : SpellAction {
 
     override fun execute(args: List<Iota>, env: CastingEnvironment): SpellAction.Result {
         // first, read the list
-        val target = args.getEntityOrBlockPos(0, argc)
+        val target = args.getEntityOrBlockPos(env.world, 0, argc)
 
         target.map(env::assertEntityInRange, env::assertPosInRangeForEditing)
 
@@ -32,7 +32,7 @@ object OpWriteIndex : SpellAction {
             { IoticBlocksAPI.INSTANCE.findIotaHolder(env.world, it) },
         ) ?: throw mishapBadEntityOrBlock(target, "iota.read")
 
-        val list = (datumHolder.readIota(env.world) as? ListIota)?.list
+        val list = (datumHolder.readIota() as? ListIota)?.list
             ?: throw mishapBadEntityOrBlock(target, "iota.read.list")
 
         // then, insert the iota at the specified index like surgeon's exaltation
@@ -46,7 +46,7 @@ object OpWriteIndex : SpellAction {
             throw mishapBadEntityOrBlock(target, "iota.write")
         }
 
-        val trueName = MishapOthersName.getTrueNameFromDatum(newListIota, null)
+        val trueName = MishapOthersName.getTrueNameFromDatum(env.world,newListIota,null)
         if (null != trueName) {
             throw MishapOthersName(trueName)
         }
