@@ -91,10 +91,4 @@ remapJar {
     inputFile.set shadowJar.archiveFile
 }
 
-tasks {
-    shadowJar {
-        exclude("fabric.mod.json")
-    }
-
-}
 

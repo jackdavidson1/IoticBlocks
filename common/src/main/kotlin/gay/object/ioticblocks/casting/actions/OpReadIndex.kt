@@ -36,7 +36,7 @@ object OpReadIndex : ConstMediaAction {
         }
 
         val value = try {
-            datum.list.getAt(index)
+            datum.list.get(index)
         } catch (_: IndexOutOfBoundsException) {
             return listOf(NullIota())
         }

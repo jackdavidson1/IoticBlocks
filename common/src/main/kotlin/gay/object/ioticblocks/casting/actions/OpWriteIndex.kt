@@ -3,7 +3,7 @@ package gay.`object`.ioticblocks.casting.actions
 import at.petrak.hexcasting.api.addldata.ADIotaHolder
 import at.petrak.hexcasting.api.casting.ParticleSpray
 import at.petrak.hexcasting.api.casting.RenderedSpell
-import at.petrak.hexcasting.api.casting.SpellList
+//import at.petrak.hexcasting.api.casting.SpellList
 import at.petrak.hexcasting.api.casting.castables.SpellAction
 import at.petrak.hexcasting.api.casting.eval.CastingEnvironment
 import at.petrak.hexcasting.api.casting.getPositiveIntUnder
@@ -36,19 +36,19 @@ object OpWriteIndex : SpellAction {
             ?: throw mishapBadEntityOrBlock(target, "iota.read.list")
 
         // then, insert the iota at the specified index like surgeon's exaltation
-        val index = args.getPositiveIntUnder(1, list.size(), argc)
+        val index = args.getPositiveIntUnder(1, list.size, argc)
         val iota = args[2]
 
-        val newListIota = ListIota(list.modifyAt(index) { SpellList.LPair(iota, it.cdr) })
+        val newListIota = ListIota(list.updated(index, iota))
 
         // then, make sure the new list is safe to write
         if (!datumHolder.writeIota(newListIota, true)) {
             throw mishapBadEntityOrBlock(target, "iota.write")
         }
 
-        val trueName = MishapOthersName.getTrueNameFromDatum(env.world,newListIota,null)
-        if (null != trueName) {
-            throw MishapOthersName(trueName)
+        val trueNameMishap = MishapOthersName.getTrueNameMishapFromDatum(env.world,newListIota,null)
+        if (null != trueNameMishap) {
+            throw trueNameMishap
         }
 
         // finally, write the new list back to the target

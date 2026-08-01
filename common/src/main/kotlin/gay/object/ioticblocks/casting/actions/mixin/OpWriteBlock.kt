@@ -30,9 +30,9 @@ object OpWriteBlock {
             throw MishapBadBlock.of(target, "iota.write")
         }
 
-        val trueName = MishapOthersName.getTrueNameFromDatum(env.world,datum,null)
-        if (null != trueName) {
-            throw MishapOthersName(trueName)
+        val trueNameMishap = MishapOthersName.getTrueNameMishapFromDatum(env.world,datum,null)
+        if (null != trueNameMishap) {
+            throw trueNameMishap
         }
 
         return SpellAction.Result(

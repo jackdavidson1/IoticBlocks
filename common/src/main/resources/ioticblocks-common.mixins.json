@@ -7,8 +7,6 @@
   ],
   "mixins": [
     "actions.MixinOpTheCoolerRead",
-    "actions.MixinOpTheCoolerReadable",
-    "actions.MixinOpTheCoolerWritable",
     "actions.MixinOpTheCoolerWrite"
   ],
   "injectors": {
