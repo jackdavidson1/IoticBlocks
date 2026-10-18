@@ -3,7 +3,7 @@ package gay.`object`.ioticblocks.casting.actions
 import at.petrak.hexcasting.api.addldata.ADIotaHolder
 import at.petrak.hexcasting.api.casting.ParticleSpray
 import at.petrak.hexcasting.api.casting.RenderedSpell
-import at.petrak.hexcasting.api.casting.SpellList
+import at.petrak.hexcasting.api.utils.TreeList
 import at.petrak.hexcasting.api.casting.castables.SpellAction
 import at.petrak.hexcasting.api.casting.eval.CastingEnvironment
 import at.petrak.hexcasting.api.casting.getPositiveIntUnder
@@ -39,7 +39,7 @@ object OpWriteIndex : SpellAction {
         val index = args.getPositiveIntUnder(1, list.size(), argc)
         val iota = args[2]
 
-        val newListIota = ListIota(list.modifyAt(index) { SpellList.LPair(iota, it.cdr) })
+        val newListIota = ListIota(list.updated(index, iota))
 
         // then, make sure the new list is safe to write
         if (!datumHolder.writeIota(newListIota, true)) {
